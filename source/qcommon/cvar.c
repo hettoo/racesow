@@ -667,6 +667,36 @@ static void Cvar_List_f( void )
 	Trie_FreeDump( dump );
 }
 
+/*
+* Cvar_Add_f
+*/
+static void Cvar_Add_f( void )
+{
+	if( Cmd_Argc() != 3 )
+	{
+		Com_Printf( "usage: cvaradd <variable> <value>\n" );
+		return;
+	}
+
+	float value = atof( Cmd_Argv(2) );
+	if( !value )
+	{
+		Com_Printf( "Could not interpret %s as a float.\n", Cmd_Argv(2) );
+		Com_Printf( "usage: cvaradd <variable> <value>\n" );
+		return;
+	}
+
+	float cvalue = Cvar_Value( Cmd_Argv(1) );
+	if ( !cvalue )
+	{
+		Com_Printf( "Could not find numeric cvar %s.\n", Cmd_Argv(1) );
+		Com_Printf( "usage: cvaradd <variable> <value>\n" );
+		return;
+	}
+
+	Cvar_SetValue( Cmd_Argv(1), value + cvalue );
+}
+
 #ifndef PUBLIC_BUILD
 /*
 * Cvar_ArchiveList_f
@@ -868,6 +898,7 @@ void Cvar_Init( void )
 	Cmd_AddCommand( "reset", Cvar_Reset_f );
 	Cmd_AddCommand( "toggle", Cvar_Toggle_f );
 	Cmd_AddCommand( "cvarlist", Cvar_List_f );
+	Cmd_AddCommand( "cvaradd", Cvar_Add_f );
 
 	Cmd_SetCompletionFunc( "set", Cvar_CompleteBuildList );
 	Cmd_SetCompletionFunc( "seta", Cvar_CompleteBuildList );
@@ -922,6 +953,7 @@ void Cvar_Shutdown( void )
 		Cmd_RemoveCommand( "reset" );
 		Cmd_RemoveCommand( "toggle" );
 		Cmd_RemoveCommand( "cvarlist" );
+		Cmd_RemoveCommand( "cvaradd" );
 #ifndef PUBLIC_BUILD
 		Cmd_RemoveCommand( "cvararchivelist" );
 #endif
