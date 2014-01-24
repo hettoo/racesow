@@ -1003,6 +1003,7 @@ extern cvar_t *rc_playerTrailsColor;
 extern cvar_t *rc_playerTrailsAlpha;
 extern cvar_t *rc_playerTrailsSize;
 extern cvar_t *rs_autoRaceDemo;
+extern cvar_t *rs_autoDemoName;
 extern cvar_t *rs_autoRaceScreenshot;
 extern cvar_t *rs_ignoreTeleEffect;
 void RC_AddLinearTrail( centity_t *cent, float lifetime );
