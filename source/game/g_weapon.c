@@ -1200,6 +1200,8 @@ void W_Fire_Electrobolt_Combined( edict_t *self, vec3_t start, vec3_t angles, fl
 
 		// some entity was touched
 		hit = &game.edicts[tr.ent];
+		if( hit == world )  // stop dead if hit the world
+			return;
 		//racesow: do hit check later to activate shootable buttons
 
 		// allow trail to go through BBOX entities (players, gibs, etc)
@@ -1218,8 +1220,6 @@ void W_Fire_Electrobolt_Combined( edict_t *self, vec3_t start, vec3_t angles, fl
 
 			G_Damage( hit, self, self, dir, dir, tr.endpos, damage, knockback, stun, dmgflags, mod );
 			//racesow make shootable buttons work
-			if( hit == world )  // stop dead if hit the world
-				return;
 			if( hit->movetype == MOVETYPE_NONE || hit->movetype == MOVETYPE_PUSH )
 				return;
 			//!racesow
@@ -1302,6 +1302,8 @@ void W_Fire_Electrobolt_FullInstant( edict_t *self, vec3_t start, vec3_t angles,
 
 		// some entity was touched
 		hit = &game.edicts[tr.ent];
+		if( hit == world )  // stop dead if hit the world
+			return;
 		//racesow: do hit check later to activate shootable buttons
 
 		// allow trail to go through BBOX entities (players, gibs, etc)
@@ -1328,8 +1330,6 @@ void W_Fire_Electrobolt_FullInstant( edict_t *self, vec3_t start, vec3_t angles,
 
 			G_Damage( hit, self, self, dir, dir, tr.endpos, damage, knockback, stun, dmgflags, mod );
 			//racesow make shottable buttons work
-			if( hit == world )  // stop dead if hit the world
-				return;
 			if( hit->movetype == MOVETYPE_NONE || hit->movetype == MOVETYPE_PUSH )
 				return;
 			//!racesow
