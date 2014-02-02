@@ -53,6 +53,10 @@ Cvar sv_cheats( "sv_cheats", "0", CVAR_SERVERINFO|CVAR_ARCHIVE|CVAR_NOSET );
 Cvar g_gravity( "g_gravity", "850", CVAR_ARCHIVE );
 Cvar g_self_knockback( "g_self_knockback", "1.18", CVAR_ARCHIVE);
 
+Cvar g_floodprotection_seconds( "g_floodprotection_seconds", "4", CVAR_ARCHIVE );
+Cvar g_floodprotection_messages( "g_floodprotection_messages", "0", CVAR_ARCHIVE );
+Cvar g_floodprotection_penalty( "g_floodprotection_penalty", "10", CVAR_ARCHIVE );
+
 /**
  * Determines if the current client is using Racesow game library
  * @param cClient @client

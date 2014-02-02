@@ -241,6 +241,13 @@ class Racesow_Player
 	int positionWeapon; //stored weapon
     float positionSpeed; //stored speed
 
+    /**
+     * Variables for privsay floodprotection
+     */
+    int privsayHead;
+    int privsayLockTill;
+    int[] privsayTime;
+
 	/**
 	 * Constructor
 	 *
@@ -303,6 +310,7 @@ class Racesow_Player
 		this.highestSpeed = 0;
 		this.state = "";
         this.diffRef = DIFFREF_AUTO;
+        this.privsayTime.resize( g_floodprotection_messages.integer );
 	}
 
 	/**
@@ -1451,7 +1459,6 @@ class Racesow_Player
 		G_PrintMsg( client.getEnt(), message );
 	}
 
-
 	/**
 	 * Send a message to another player
 	 * @param String argString, cClient @client
@@ -1459,6 +1466,37 @@ class Racesow_Player
 	 */
 	bool privSay( String message, cClient @target )
 	{
+        if ( this.privsayLockTill > levelTime )
+        {
+            int penalty = (this.privsayLockTill - levelTime) / 1000;
+            this.sendMessage( "You can't privsay for " + penalty + " more seconds.\n");
+            return true;
+        }
+
+        if ( privsayHead == g_floodprotection_messages.integer )
+        {
+            if ( privsayHead != 0 )
+            {
+                for ( int i = 1; i < privsayHead; i++ )
+                {
+                    privsayTime[i - 1] = privsayTime[i];
+                }
+                privsayTime[privsayHead - 1] = levelTime;
+
+                if ( privsayTime[0] + g_floodprotection_seconds.integer * 1000 > levelTime )
+                {
+                    this.sendMessage( "Flood protection: You can't privsay for " + g_floodprotection_penalty.string + " seconds\n");
+                    this.privsayLockTill = levelTime + g_floodprotection_penalty.integer * 1000;
+                    return true;
+                }
+            }
+        }
+        else
+        {
+            privsayTime[privsayHead] = levelTime;
+            privsayHead++;
+        }
+
 	    this.sendMessage( target.name + S_COLOR_RED + " >>> " + S_COLOR_WHITE + message + "\n");
 	    sendMessage( client.name + S_COLOR_RED + " <<< " + S_COLOR_WHITE + message + "\n", @target );
 		return true;

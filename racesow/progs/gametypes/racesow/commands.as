@@ -628,6 +628,7 @@ class Command_Privsay : Racesow_Command
             player.sendErrorMessage( "You must provide a player id and a message");
             return false;
         }
+
         return true;
     }
 
