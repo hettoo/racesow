@@ -640,8 +640,8 @@ void GT_ThinkRules()
         client.setHUDStat( STAT_MESSAGE_ALPHA, 0 );
         client.setHUDStat( STAT_MESSAGE_BETA, 0 );
 
-    	if( player.isUsingChrono )
-    		client.setHUDStat( STAT_TIME_ALPHA, (levelTime - player.chronoTime()) / 100 );
+    	if( player.isUsingChrono || player.practicing )
+    		client.setHUDStat( STAT_TIME_SELF, (levelTime - player.chronoTime()) / 100 );
     }
 
     racesowGametype.ThinkRules();

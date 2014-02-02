@@ -826,6 +826,9 @@ class Racesow_Player
         if( this.client.getEnt().team == TEAM_SPECTATOR )
             this.inNoclip = false;
 
+        if ( this.practicing )
+            this.chronoStartTime = levelTime;
+
   		if ( this.practicing && this.positionSaved )
   		{
   			this.teleport( this.positionOrigin, this.positionAngles, false, false, false );

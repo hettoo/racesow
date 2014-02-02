@@ -885,7 +885,7 @@ class Command_Practicemode : Racesow_Command
                     leave = true;
                 else
                     leave = false;
-                if ( leave ^^ player.practicing )
+                if ( leave && player.practicing )
                     return true;
             }
 
@@ -897,6 +897,7 @@ class Command_Practicemode : Racesow_Command
 			}
             else
             {
+                player.chronoStartTime = levelTime;
 				player.practicing = true;
                 player.inNoclip = false;
 				player.sendAward( S_COLOR_GREEN + "You have entered practice mode" );
